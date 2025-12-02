@@ -67,7 +67,6 @@ export function ToyIndex() {
         showSuccessMsg('Added to Cart')
     }
 
-    console.log(filterBy)
     // console.log('toys:', toys)
     return (
         <section className="toy-index">
