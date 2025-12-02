@@ -3,6 +3,11 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { toyService } from "../services/toy.service.js"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { saveToy } from "../store/actions/toy.actions.js"
+import { useConfirmTabClose } from "../cmps/hooks/useConfirmTabClose.js"
+
+
+
+
 
 export function ToyEdit() {
     const navigate = useNavigate()
@@ -10,6 +15,7 @@ export function ToyEdit() {
     const { toyId } = useParams()
 
     //TODO: custome hooks
+    const setHasUnsavedChanges = useConfirmTabClose()
 
     useEffect(() => {
         if (toyId) loadToy()
@@ -45,6 +51,8 @@ export function ToyEdit() {
         }
 
         setToyToEdit(prevToyToEdit => ({ ...prevToyToEdit, [field]: value }))
+        setHasUnsavedChanges(true)
+
     }
 
     function onSaveToy(ev) {
@@ -98,7 +106,6 @@ export function ToyEdit() {
                         <Link to="/toy">Cancel</Link>
                     </div>
                     <section>
-                        {/* <h1>{isOnline ? '✅ Online' : '❌ Disconnected'}</h1> */}
                     </section>
                 </form>
             </section>

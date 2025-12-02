@@ -1,0 +1,20 @@
+.chat .container {
+    position: relative;
+}
+
+.chat form {
+    position: absolute;
+    bottom: 10px;
+}
+
+.chat form input {
+    width: 300px;
+}
+
+.chat li:nth-child(odd) {
+    background-color: aliceblue;
+}
+
+.chat li:nth-child(even) {
+    background-color: rgb(227, 225, 225);
+}

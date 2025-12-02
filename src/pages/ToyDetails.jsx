@@ -3,11 +3,13 @@ import { toyService } from "../services/toy.service.js";
 import { Link, useParams } from "react-router-dom"
 import { Popup } from "../cmps/Popup.jsx";
 import { Chat } from "../cmps/Chat.jsx";
+import { useOnlineStatus } from "../cmps/hooks/useOnlineStatus.js"
 
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [popupIsOpen, setPopupIsOpen] = useState(false)
+    const isOnline = useOnlineStatus()
 
     const { toyId } = useParams()
 
@@ -36,19 +38,22 @@ export function ToyDetails() {
         setPopupIsOpen(prevState => !prevState)
     }
 
+
     if (!toy) return <div>Loading...</div>
     return (
         <>
             <span className="material-symbols-outlined" onClick={onTogglePopup}>
                 chat
             </span>
+            <h1>{isOnline ? '✅ Online' : '❌ Disconnected'}</h1>
+
             <section className="toy-details">
                 <h1>Toy name: {toy.name} </h1>
                 <h5>price: {toy.price}</h5>
                 <img src={toy.imgUrl} />
                 <Link to={`/toy`}>Back</Link>
             </section>
-            <Popup isOpen={popupIsOpen} header={'this is the chat'} footer={'this is the footer'}>
+            <Popup isOpen={popupIsOpen} header={'How can I help?'} footer={''} close={onTogglePopup}>
                 <Chat />
             </Popup>
         </>
