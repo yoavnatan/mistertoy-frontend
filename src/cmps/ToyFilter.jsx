@@ -57,8 +57,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     <option value="false">Out of stock</option>
                 </select>
 
-                <label for="labels">Labels: </label>
-
+                <label htmlFor="labels">Labels: </label>
                 <select name="labels" id="labels" onChange={handleMultiSelect} multiple>
                     <option value="">--Please choose an option--</option>
                     <option value="Battery Powered">Battery Powered</option>
