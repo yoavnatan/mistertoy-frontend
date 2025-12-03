@@ -1,4 +1,4 @@
-.popup .container {
+.popup.container {
     width: 400px;
     position: fixed;
     bottom: 0px;
@@ -12,4 +12,8 @@
     bottom: 280px;
     right: 400px;
     z-index: 1;
+}
+
+.popup footer {
+    transform: translateY(400%);
 }

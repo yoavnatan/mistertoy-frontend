@@ -11,11 +11,11 @@ export function Popup({ header, footer, children, isOpen, close }) {
         <>
             <section className="popup container">
                 <button className="btn-close" onClick={close}>X</button>
-                {/* <header>{header}</header> */}
+                <header>{header}</header>
                 <main>
                     {children}
                 </main>
-                {/* <footer>{footer}</footer> */}
+                <footer>{footer}</footer>
             </section>
         </>
     )
