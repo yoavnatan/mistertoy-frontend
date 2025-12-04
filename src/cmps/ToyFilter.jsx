@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
 
 
-export function ToyFilter({ filterBy, onSetFilter }) {
+export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
+    console.log(toyLabels)
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
@@ -17,6 +18,9 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     function handleChange({ target }) {
         let { value, name: field, type } = target
         value = type === 'number' ? +value : value
+        if (type === 'select-multiple') {
+            value = [...target.selectedOptions].map(option => option.value)
+        }
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
@@ -56,21 +60,17 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     <option value="true">In stock</option>
                     <option value="false">Out of stock</option>
                 </select>
-
-                <label htmlFor="labels">Labels: </label>
-                <select name="labels" id="labels" onChange={handleMultiSelect} multiple>
-                    <option value="">--Please choose an option--</option>
-                    <option value="Battery Powered">Battery Powered</option>
-                    <option value="Outdoor">Outdoor</option>
-                    <option value="Baby">Baby</option>
-                    <option value="Plush">Plush</option>
-                    <option value="Vehicle">Vehicle</option>
-                    <option value="Building">Building</option>
-                    <option value="Board Game">Board Game</option>
-                    <option value="Fantasy">Fantasy</option>
-                    <option value="Electronic">Electronic</option>
-                </select>
-
+                {toyLabels &&
+                    // <label htmlFor="labels">Labels: </label>
+                    <select name="labels" id="labels" onChange={handleChange} multiple value={filterByToEdit.labels || []}>
+                        <option disabled value="">Labels</option>
+                        {toyLabels.map(label => (
+                            <option key={label} value={label}>
+                                {label}
+                            </option>
+                        ))}
+                    </select>
+                }
             </form>
 
         </section>

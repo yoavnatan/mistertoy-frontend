@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { ToyFilter } from '../cmps/ToyFilter.jsx'
 import { ToyList } from '../cmps/ToyList.jsx'
 import { toyService } from '../services/toy.service.js'
@@ -15,10 +16,14 @@ export function ToyIndex() {
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
+    const [toyLabels, setToyLabels] = useState()
+
     useEffect(() => {
         loadToys()
+            .then(() => toyService.getToyLabels())
+            .then(labels => setToyLabels(labels))
             .catch(err => {
-                showErrorMsg('Cannot load toys!')
+                showErrorMsg('Cannot load toys!', err)
             })
     }, [filterBy])
 
@@ -74,7 +79,7 @@ export function ToyIndex() {
             <main>
                 <Link to="/toy/edit">Add Toy</Link>
                 {/* <button className='add-btn' onClick={onAddToy}>Add Random Toy ⛐</button> */}
-                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} toyLabels={toyLabels} />
                 <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
                 {!isLoading
                     ? <ToyList

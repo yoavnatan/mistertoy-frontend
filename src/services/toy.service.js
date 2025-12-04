@@ -4,6 +4,20 @@ import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'toyDB'
+
+const labels = [
+    'Educational',
+    'Battery Powered',
+    'Outdoor',
+    'Baby',
+    'Plush',
+    'Vehicle',
+    'Building',
+    'Board Game',
+    'Fantasy',
+    'Electronic'
+]
+
 _createToys()
 
 export const toyService = {
@@ -13,7 +27,8 @@ export const toyService = {
     remove,
     getEmptyToy,
     getDefaultFilter,
-    getRandomLabels
+    getRandomLabels,
+    getToyLabels
 }
 
 function query(filterBy = {}) {
@@ -233,4 +248,12 @@ function getRandomLabels() {
         labels.push(currLabel)
     }
     return labels
+}
+
+function getToyLabels() {
+    return new Promise((resolve) =>
+        setTimeout(() => {
+            resolve(labels)
+        }, 100)
+    )
 }
