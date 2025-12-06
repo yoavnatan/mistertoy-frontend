@@ -1,5 +1,6 @@
 /* Setup */
 @import 'setup/vars.css';
+@import 'setup/animations.css';
 @import 'setup/typography.css';
 
 /* Base */
@@ -22,6 +23,7 @@
 
 @import 'cmps/Popup.css';
 @import 'cmps/Chat.css';
+@import 'cmps/Loader.css';
 
 @import 'cmps/ShoppingCart.css';
 

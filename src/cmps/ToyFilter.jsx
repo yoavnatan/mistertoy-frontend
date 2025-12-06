@@ -5,7 +5,6 @@ import { utilService } from "../services/util.service.js"
 
 
 export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
-    console.log(toyLabels)
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 

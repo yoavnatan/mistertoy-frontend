@@ -8,6 +8,7 @@ import { loadToys, removeToy, removeToyOptimistic, saveToy, setFilterBy } from '
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ToySort } from '../cmps/ToySort.jsx'
+import { Loader } from '../cmps/Loader.jsx'
 
 export function ToyIndex() {
 
@@ -81,7 +82,7 @@ export function ToyIndex() {
                 {/* <button className='add-btn' onClick={onAddToy}>Add Random Toy ⛐</button> */}
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} toyLabels={toyLabels} />
                 <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
-                {!isLoading
+                {/* {!isLoading
                     ? <ToyList
                         toys={toys}
                         onRemoveToy={onRemoveToy}
@@ -89,7 +90,13 @@ export function ToyIndex() {
                         addToCart={addToCart}
                     />
                     : <div>Loading...</div>
-                }
+                } */}
+                <Loader isLoading={isLoading}>
+                    <ToyList
+                        toys={toys}
+                        onRemoveToy={onRemoveToy}
+                    />
+                </Loader>
                 <hr />
             </main>
         </section>
