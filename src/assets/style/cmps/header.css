@@ -1,0 +1,13 @@
+.main-header {
+    background-color: var(--clr2bg-light);
+    /* height: min-content; */
+    justify-content: space-between;
+}
+
+.main-header>* {
+    padding: 1em;
+}
+
+.main-header .main-nav {
+    gap: 1em;
+}

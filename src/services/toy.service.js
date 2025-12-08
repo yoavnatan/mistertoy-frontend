@@ -3,8 +3,10 @@ import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
+import { useSelector } from 'react-redux'
 
 import Axios from 'axios'
+import { store } from '../store/store.js'
 const axios = Axios.create({
     withCredentials: true
 })
@@ -24,7 +26,9 @@ export const toyService = {
     getDefaultFilter,
     getRandomToy,
     getRandomLabels,
-    getToyLabels
+    getToyLabels,
+    getLabelsStats,
+    getInventoryByLabel
 
 }
 
@@ -113,4 +117,47 @@ function getToyLabels() {
             resolve(labels)
         }, 100)
     )
+}
+
+function getLabelsStats() {
+    return query()
+        .then(toys => {
+            const result = {}
+
+            labels.forEach(label => {
+                const filtered = toys.filter(toy => toy.labels.includes(label))
+
+                if (filtered.length === 0) {
+                    result[label] = null
+                } else {
+                    const avg = filtered.reduce((sum, toy) => sum + toy.price, 0) / filtered.length
+                    result[label] = avg
+                }
+            })
+            return result
+        })
+}
+
+function getInventoryByLabel() {
+    return query()
+        .then(toys => {
+            const result = {}
+
+            labels.forEach(label => {
+                result[label] = { inStock: 0, outOfStock: 0 }
+            })
+
+            toys.forEach(toy => {
+                toy.labels.forEach(label => {
+                    if (result[label]) {
+                        if (toy.inStock) result[label].inStock++
+                        else result[label].outOfStock++
+                    }
+                })
+            })
+            console.log(result)
+            return result
+
+        })
+
 }
