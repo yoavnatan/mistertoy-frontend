@@ -1,4 +1,5 @@
 .toy-filter {
     background-color: var(--clr2bg);
     padding: 1em;
+    flex-wrap: wrap;
 }

@@ -48,11 +48,10 @@ export default function MultipleSelectChip({ values, setFilterByToEdit }) {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
-    console.log(personName)
     return (
         <div>
             <FormControl sx={{ backgroundColor: 'white', m: 1, width: 200, height: 50 }}>
-                <InputLabel id="demo-multiple-chip-label" >Chip</InputLabel>
+                <InputLabel id="demo-multiple-chip-label" >Labels</InputLabel>
                 <Select sx={{ height: 50 }}
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"

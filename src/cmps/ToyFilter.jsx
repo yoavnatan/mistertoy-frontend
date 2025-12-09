@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
 import MultipleSelectChip from "./MultiSelect.jsx"
-
+import TextField from "./TextField.jsx"
+import SelectLabels from "./Select.jsx"
 
 export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
 
@@ -24,54 +25,60 @@ export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-    function handleMultiSelect({ target }) {
-        const labels = []
-        for (let i = 0; i < target.selectedOptions.length; i++) {
-            const currentVal = target.selectedOptions[i].value
-            labels.push(currentVal)
-        }
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, labels: labels }))
-    }
+    // function handleMultiSelect({ target }) {
+    //     const labels = []
+    //     for (let i = 0; i < target.selectedOptions.length; i++) {
+    //         const currentVal = target.selectedOptions[i].value
+    //         labels.push(currentVal)
+    //     }
+    //     setFilterByToEdit((prevFilter) => ({ ...prevFilter, labels: labels }))
+    // }
+
     return (
-        <section className="toy-filter full main-layout">
-            <h2>Toys Filter</h2>
-            <form >
-                <label htmlFor="name">Name:</label>
+        <section className="toy-filter full main-layout flex">
+
+            {/* <form > */}
+            {/* <label htmlFor="name">Name:</label>
                 <input type="text"
                     id="txt"
                     name="txt"
                     placeholder="By name"
                     value={filterByToEdit.txt}
                     onChange={handleChange}
-                />
+                /> */}
+            <TextField placeHolder={"Search by name"} type={"text"} value={filterByToEdit.txt} name={"txt"} handleChange={handleChange} />
 
-                <label htmlFor="maxPrice">Max price:</label>
+            {/* <label htmlFor="maxPrice">Max price:</label>
                 <input type="number"
                     id="maxPrice"
                     name="maxPrice"
                     placeholder="By max price"
                     value={filterByToEdit.maxPrice || ''}
                     onChange={handleChange}
-                />
+                /> */}
+            <TextField placeHolder={"Max price"} type={"number"} value={filterByToEdit.MaxPrice} name={"maxPrice"} handleChange={handleChange} />
 
-                <label htmlFor="inStock" > completion: </label>
+
+            {/* <label htmlFor="inStock" > completion: </label>
                 <select name="inStock" id="inStock" onChange={handleChange}>
                     <option value="">All</option>
                     <option value="true">In stock</option>
                     <option value="false">Out of stock</option>
-                </select>
-                {toyLabels &&
-                    <MultipleSelectChip values={toyLabels} handleChange={handleChange} filterByToEdit={filterByToEdit} setFilterByToEdit={setFilterByToEdit} />
-                    // <select name="labels" id="labels" onChange={handleChange} multiple value={filterByToEdit.labels || []}>
-                    //     <option disabled value="">Labels</option>
-                    //     {toyLabels.map(label => (
-                    //         <option key={label} value={label}>
-                    //             {label}
-                    //         </option>
-                    //     ))}
-                    // </select>
-                }
-            </form>
+                </select> */}
+
+            <SelectLabels value={filterByToEdit.inStock} handleChange={handleChange} />
+            {toyLabels &&
+                <MultipleSelectChip values={toyLabels} setFilterByToEdit={setFilterByToEdit} />
+                // <select name="labels" id="labels" onChange={handleChange} multiple value={filterByToEdit.labels || []}>
+                //     <option disabled value="">Labels</option>
+                //     {toyLabels.map(label => (
+                //         <option key={label} value={label}>
+                //             {label}
+                //         </option>
+                //     ))}
+                // </select>
+            }
+            {/* </form> */}
 
         </section>
     )
