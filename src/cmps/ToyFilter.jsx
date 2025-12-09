@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
+import MultipleSelectChip from "./MultiSelect.jsx"
 
 
 export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
@@ -60,15 +61,15 @@ export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
                     <option value="false">Out of stock</option>
                 </select>
                 {toyLabels &&
-                    // <label htmlFor="labels">Labels: </label>
-                    <select name="labels" id="labels" onChange={handleChange} multiple value={filterByToEdit.labels || []}>
-                        <option disabled value="">Labels</option>
-                        {toyLabels.map(label => (
-                            <option key={label} value={label}>
-                                {label}
-                            </option>
-                        ))}
-                    </select>
+                    <MultipleSelectChip values={toyLabels} handleChange={handleChange} filterByToEdit={filterByToEdit} setFilterByToEdit={setFilterByToEdit} />
+                    // <select name="labels" id="labels" onChange={handleChange} multiple value={filterByToEdit.labels || []}>
+                    //     <option disabled value="">Labels</option>
+                    //     {toyLabels.map(label => (
+                    //         <option key={label} value={label}>
+                    //             {label}
+                    //         </option>
+                    //     ))}
+                    // </select>
                 }
             </form>
 
