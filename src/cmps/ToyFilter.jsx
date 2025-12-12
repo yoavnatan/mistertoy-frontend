@@ -83,3 +83,5 @@ export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
         </section>
     )
 }
+
+

@@ -1,114 +1,82 @@
-import { useEffect, useRef, useState } from "react"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { toyService } from "../services/toy.service.js"
-import { Link, useNavigate, useParams } from "react-router-dom"
 import { saveToy } from "../store/actions/toy.actions.js"
-import { useConfirmTabClose } from "../cmps/hooks/useConfirmTabClose.js"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-
-
-
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import * as Yup from "yup"
 
 export function ToyEdit() {
     const navigate = useNavigate()
-    const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const { toyId } = useParams()
-
-    //TODO: custome hooks
-    const setHasUnsavedChanges = useConfirmTabClose()
+    const [toyToEdit, setToyToEdit] = useState(null)
 
     useEffect(() => {
-        if (toyId) loadToy()
+        if (!toyId) {
+            setToyToEdit(toyService.getEmptyToy())
+        } else {
+            toyService.getById(toyId)
+                .then(setToyToEdit)
+                .catch(() => navigate("/toy"))
+        }
     }, [])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then(toy => {
-                setToyToEdit(toy)
-            })
-            .catch(err => {
-                console.log('Had issues in toy edit', err)
-                navigate('/toy')
-            })
-    }
+    if (!toyToEdit) return <div>Loading...</div>
 
-    function handleChange({ target }) {
-        const field = target.name
-        let value = target.value
+    const validationSchema = Yup.object({
+        name: Yup.string()
+            .required("Name is required")
+            .min(2, "Too short")
+            .max(15, "Too long"),
+        price: Yup.number()
+            .required("Price is required")
+            .min(1, "Must be at least 1"),
+        inStock: Yup.boolean(),
+    })
 
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value || ''
-                break
-
-            case 'checkbox':
-                value = target.checked
-                break
-
-            default:
-                break
-        }
-
-        setToyToEdit(prevToyToEdit => ({ ...prevToyToEdit, [field]: value }))
-        setHasUnsavedChanges(true)
-
-    }
-
-    function onSaveToy(ev) {
-        ev.preventDefault()
-        if (!toyToEdit.price) toyToEdit.price = 1000
-        saveToy(toyToEdit)
+    function onSave(values) {
+        saveToy(values)
             .then(() => {
-                showSuccessMsg('Toy Saved!')
-                navigate('/toy')
+                showSuccessMsg("Toy saved!")
+                navigate("/toy")
             })
-            .catch(err => {
-                console.log('Had issues in toy details', err)
-                showErrorMsg('Had issues in toy details')
-            })
+            .catch(() => showErrorMsg("Problem saving toy"))
     }
-    console.log(toyToEdit)
+
     return (
-        <>
-            <section className="toy-edit">
-                <h2>{toyToEdit._id ? 'Edit' : 'Add'} Toy</h2>
+        <section className="toy-edit">
+            <h2>{toyId ? "Edit Toy" : "Add Toy"}</h2>
 
-                <form onSubmit={onSaveToy} >
-                    <label htmlFor="name">Name : </label>
-                    <input type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Enter name..."
-                        value={toyToEdit.name}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="price">Price : </label>
-                    <input type="number"
-                        name="price"
-                        id="price"
-                        placeholder="Enter price"
-                        value={toyToEdit.price}
-                        onChange={handleChange}
-                    />
+            <Formik
+                initialValues={toyToEdit}
+                enableReinitialize={true}
+                validationSchema={validationSchema}
+                onSubmit={onSave}
+            >
+                {({ errors, touched, dirty }) => (
 
-                    <label htmlFor="inStock">inStock:</label>
-                    <input type="checkbox"
-                        name="inStock"
-                        id="inStock"
-                        checked={toyToEdit.inStock}
-                        value={toyToEdit.inStock}
-                        onChange={handleChange}
-                    />
+                    <Form>
+                        <label>Name:</label>
+                        <Field name="name" type="text" />
+                        {errors.name && touched.name && (
+                            <div className='errors'>{errors.name}</div>
+                        )}
+                        <label>Price:</label>
+                        <Field name="price" type="number" />
+                        {errors.price && touched.price && (
+                            <div className='errors'>{errors.price}</div>
+                        )}
+                        <label>In Stock:</label>
+                        <Field name="inStock" type="checkbox" />
 
-                    <div>
-                        <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
+                        <button type="submit">
+                            {toyId ? "Save" : "Add"}
+                        </button>
                         <Link to="/toy">Cancel</Link>
-                    </div>
-                    <section>
-                    </section>
-                </form>
-            </section>
-        </>
+                    </Form>
+                )}
+            </Formik>
+        </section>
     )
 }

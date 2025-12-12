@@ -10,6 +10,7 @@ import { ToyEdit } from './pages/ToyEdit.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
 import { useEffect } from 'react'
 import { loadToys } from './store/actions/toy.actions.js'
+import { AboutUs } from './cmps/AboutUs.jsx'
 
 export default function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function App() {
               <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
               <Route element={<ToyDetails />} path="/toy/:toyId" />
               <Route element={<Dashboard />} path="/dashboard" />
+              <Route element={<AboutUs />} path="/about" />
             </Routes>
           </main>
         </section>
