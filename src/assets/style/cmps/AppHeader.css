@@ -1,7 +1,8 @@
-.app-header {
+.main-header {
     background-color: var(--clr1);
-    color: var(--clr1bg);
+    color: var(--gray1);
     padding-block: 1em;
+    height: 100px;
 }
 
 .app-nav {

@@ -1,10 +1,11 @@
 import { AccordionGroup, AccordionItem } from "../cmps/AccodionGroup.jsx";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AdvancedMarker,
     APIProvider,
     InfoWindow,
     Map,
+    useMap,
     Marker,
     Pin,
     useAdvancedMarkerRef
@@ -23,8 +24,6 @@ export function AboutUs() {
     const [markerRef2, marker2] = useAdvancedMarkerRef();
     const [markerRef3, marker3] = useAdvancedMarkerRef();
 
-
-
     return (
         <>
             <div className="map-container">
@@ -35,20 +34,27 @@ export function AboutUs() {
                         defaultCenter={{ lat: 32.08530, lng: 34.78177 }}
                         defaultZoom={10}
                         gestureHandling='greedy'
-                        disableDefaultUI>
+                        disableDefaultUI
+                        onClick={(ev) => {
+                            console.log(ev)
+                        }}>
 
                         <AdvancedMarker
                             ref={markerRef1}
-                            onClick={() => {
+                            onClick={(ev) => {
                                 setInfowindowOpen(true)
                                 setSelecedMarker(marker1)
+                                console.log(ev.latLng.lat())
+                                console.log(ev.latLng.lng())
+
                             }}
                             position={{ lat: 32.08530, lng: 34.78177 }}
                             title={'Branch 1'}
                         />
                         <AdvancedMarker
                             ref={markerRef2}
-                            onClick={() => {
+
+                            onClick={(ev) => {
                                 setInfowindowOpen(true)
                                 setSelecedMarker(marker2)
                             }
@@ -96,5 +102,4 @@ export function AboutUs() {
         </>
     )
 }
-
 

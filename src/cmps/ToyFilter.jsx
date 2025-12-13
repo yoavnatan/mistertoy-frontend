@@ -35,7 +35,7 @@ export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
     // }
 
     return (
-        <section className="toy-filter full main-layout flex">
+        <section className="toy-filter  flex">
 
             {/* <form > */}
             {/* <label htmlFor="name">Name:</label>

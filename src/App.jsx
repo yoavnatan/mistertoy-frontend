@@ -23,8 +23,8 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <section className="app">
-          <AppHeader />
           <main className="main-layout">
+            <AppHeader />
             <Routes>
               <Route element={<ToyIndex />} path="/" />
               <Route element={<ToyIndex />} path="/toy" />

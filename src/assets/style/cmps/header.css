@@ -2,6 +2,7 @@
     background-color: var(--clr2bg-light);
     /* height: min-content; */
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .main-header>* {

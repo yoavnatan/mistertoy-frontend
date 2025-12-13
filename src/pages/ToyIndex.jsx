@@ -76,13 +76,12 @@ export function ToyIndex() {
     // console.log('toys:', toys)
     return (
         <section className="toy-index">
-            <h3>Toys App</h3>
             <main>
-                <Link to="/toy/edit">Add Toy</Link>
                 {/* <button className='add-btn' onClick={onAddToy}>Add Random Toy ⛐</button> */}
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} toyLabels={toyLabels} />
-                <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
-                {/* {!isLoading
+                <div class="actions flex space-arount">
+                    <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
+                    {/* {!isLoading
                     ? <ToyList
                         toys={toys}
                         onRemoveToy={onRemoveToy}
@@ -91,6 +90,8 @@ export function ToyIndex() {
                     />
                     : <div>Loading...</div>
                 } */}
+                    <Link className="btn-add" to="/toy/edit">Add Toy</Link>
+                </div>
                 <Loader isLoading={isLoading}>
                     <ToyList
                         toys={toys}

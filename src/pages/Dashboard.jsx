@@ -4,8 +4,10 @@ import { LineChart } from "../cmps/LineChart.jsx";
 export function Dashboard() {
     return (
         <>
-            <DoughnutChart />
-            <LineChart />
+            <div class="dashboard container">
+                <DoughnutChart />
+                <LineChart />
+            </div >
         </>
     )
 }

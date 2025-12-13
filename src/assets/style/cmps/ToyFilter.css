@@ -2,4 +2,7 @@
     background-color: var(--clr2bg);
     padding: 1em;
     flex-wrap: wrap;
+    border-radius: 1em;
+    box-shadow: 0px 0px 5px #3c463e;
+    margin-top: 10px;
 }
