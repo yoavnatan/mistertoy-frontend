@@ -16,9 +16,15 @@ export function ToyEdit() {
         if (!toyId) {
             setToyToEdit(toyService.getEmptyToy())
         } else {
-            toyService.getById(toyId)
-                .then(setToyToEdit)
-                .catch(() => navigate("/toy"))
+            (async () => {
+                try {
+                    const toy = await toyService.getById(toyId)
+                    setToyToEdit(toy)
+                } catch (err) {
+                    console.log('err', err)
+                    navigate("/toy")
+                }
+            })()
         }
     }, [])
 
@@ -35,13 +41,17 @@ export function ToyEdit() {
         inStock: Yup.boolean(),
     })
 
-    function onSave(values) {
-        saveToy(values)
-            .then(() => {
-                showSuccessMsg("Toy saved!")
-                navigate("/toy")
-            })
-            .catch(() => showErrorMsg("Problem saving toy"))
+    async function onSave(values) {
+
+        try {
+            await saveToy(values)
+            showSuccessMsg("Toy saved!")
+            navigate("/toy")
+        } catch (err) {
+            console.log(err)
+            showErrorMsg("Problem saving toy")
+        }
+
     }
 
     return (

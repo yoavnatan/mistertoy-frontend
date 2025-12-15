@@ -11,6 +11,7 @@ import { Dashboard } from './pages/Dashboard.jsx'
 import { useEffect } from 'react'
 import { loadToys } from './store/actions/toy.actions.js'
 import { AboutUs } from './cmps/AboutUs.jsx'
+import { UserMsg } from './cmps/UserMsg.jsx'
 
 export default function App() {
   useEffect(() => {
@@ -22,9 +23,9 @@ export default function App() {
 
     <Provider store={store}>
       <Router>
-        <section className="app">
-          <main className="main-layout">
-            <AppHeader />
+        <section className=" main-layout">
+          <AppHeader />
+          <main>
             <Routes>
               <Route element={<ToyIndex />} path="/" />
               <Route element={<ToyIndex />} path="/toy" />
@@ -37,6 +38,7 @@ export default function App() {
           </main>
         </section>
       </Router>
+      <UserMsg />
     </Provider>
 
   )

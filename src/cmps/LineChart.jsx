@@ -26,8 +26,12 @@ export function LineChart() {
     const [inventories, setInventories] = useState()
 
     useEffect(() => {
-        toyService.getInventoryByLabel()
-            .then(res => setInventories(res))
+
+        (async () => {
+
+            const res = await toyService.getInventoryByLabel()
+            setInventories(res)
+        })()
 
     }, [])
     const options = {

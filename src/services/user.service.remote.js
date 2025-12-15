@@ -14,13 +14,11 @@ export const userService = {
 }
 
 
-function login({ username, password }) {
+async function login({ username, password }) {
+    const user = await httpService.post(BASE_URL + 'login', { username, password })
+    if (user) return _setLoggedinUser(user)
+    else throw new Error('Invalid login')
 
-    return httpService.post(BASE_URL + 'login', { username, password })
-        .then(user => {
-            if (user) return _setLoggedinUser(user)
-            else return Promise.reject('Invalid login')
-        })
 }
 
 function signup({ username, password, fullname }) {

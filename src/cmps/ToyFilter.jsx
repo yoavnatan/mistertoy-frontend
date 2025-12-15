@@ -5,15 +5,23 @@ import { utilService } from "../services/util.service.js"
 import MultipleSelectChip from "./MultiSelect.jsx"
 import TextField from "./TextField.jsx"
 import SelectLabels from "./Select.jsx"
+import { toyService } from "../services/toy.service.js"
 
-export function ToyFilter({ filterBy, onSetFilter, toyLabels }) {
+export function ToyFilter({ filterBy, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
-    onSetFilter = useRef(utilService.debounce(onSetFilter, 300))
+    const debouncedOnSetFilter = useRef(utilService.debounce(onSetFilter, 300))
+    const toyLabels = toyService.getToyLabels()
+    // onSetFilter = useRef(utilService.debounce(onSetFilter, 300))
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
-        onSetFilter.current(filterByToEdit)
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
+        debouncedOnSetFilter.current(filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {

@@ -25,13 +25,17 @@ export function ToyDetails() {
 
     }, [toyId])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then(toy => setToy(toy))
-            .catch(err => {
-                console.log('Could not load toy details', err)
-                navigate('/toy')
-            })
+    async function loadToy() {
+        try {
+            const toy = await toyService.getById(toyId)
+            setToy(toy)
+
+        } catch (err) {
+            console.log('Could not load toy details', err)
+            navigate('/toy')
+
+        }
+
     }
 
     function onTogglePopup() {

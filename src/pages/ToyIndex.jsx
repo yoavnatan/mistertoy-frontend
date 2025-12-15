@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { ToyFilter } from '../cmps/ToyFilter.jsx'
 import { ToyList } from '../cmps/ToyList.jsx'
 import { toyService } from '../services/toy.service.js'
@@ -13,19 +13,23 @@ import { Loader } from '../cmps/Loader.jsx'
 export function ToyIndex() {
 
     const dispatch = useDispatch()
-    const toys = useSelector(storeState => storeState.toyModule.toys)
+    const toys = useSelector(storeState => storeState.toyModule.toys || [])
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
-    const [toyLabels, setToyLabels] = useState()
+
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
-        loadToys()
-            .then(() => toyService.getToyLabels())
-            .then(labels => setToyLabels(labels))
-            .catch(err => {
-                showErrorMsg('Cannot load toys!', err)
-            })
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
+        loadToys().catch(err => {
+            console.log('err: ', err)
+            showErrorMsg('Cannot load toys!', err)
+        })
+
     }, [filterBy])
 
 
@@ -33,14 +37,14 @@ export function ToyIndex() {
         setFilterBy(filterBy)
     }
 
-    function onRemoveToy(toyId) {
-        removeToyOptimistic(toyId)
-            .then(() => {
-                showSuccessMsg('Toy removed')
-            })
-            .catch(err => {
-                showErrorMsg('Cannot remove toy')
-            })
+    async function onRemoveToy(toyId) {
+
+        try {
+            await removeToyOptimistic(toyId)
+            showSuccessMsg('Toy removed')
+        } catch (err) {
+            showErrorMsg('Cannot remove toy')
+        }
     }
 
     // function onAddToy() {
@@ -73,12 +77,11 @@ export function ToyIndex() {
         showSuccessMsg('Added to Cart')
     }
 
-    // console.log('toys:', toys)
     return (
         <section className="toy-index">
             <main>
                 {/* <button className='add-btn' onClick={onAddToy}>Add Random Toy ⛐</button> */}
-                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} toyLabels={toyLabels} />
+                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 <div class="actions flex space-arount">
                     <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
                     {/* {!isLoading
@@ -92,6 +95,9 @@ export function ToyIndex() {
                 } */}
                     <Link className="btn-add" to="/toy/edit">Add Toy</Link>
                 </div>
+
+                {/* {isLoading && <Loader />}
+                {!isLoading && <ToyList toys={toys} onRemoveToy={onRemoveToy} />} */}
                 <Loader isLoading={isLoading}>
                     <ToyList
                         toys={toys}

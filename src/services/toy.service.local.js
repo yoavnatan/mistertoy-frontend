@@ -32,7 +32,7 @@ export const toyService = {
 }
 
 function query(filterBy = {}) {
-    // console.log(filterBy)
+    console.log(filterBy)
     return storageService.query(STORAGE_KEY)
         .then(toys => {
             if (!filterBy.txt) filterBy.txt = ''

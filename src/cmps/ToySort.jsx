@@ -6,13 +6,18 @@ import { useEffect, useRef, useState } from "react"
 export function ToySort({ filterBy, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    const debouncedSetFilterRef = useRef(utilService.debounce(onSetFilter, 500))
+    const debouncedSetFilterRef = useRef(utilService.debounce(onSetFilter, 0))
 
+
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
-        // Notify parent
-
-        debouncedSetFilterRef.current(filterByToEdit)
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
+        console.log(filterByToEdit)
+        onSetFilter(filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {

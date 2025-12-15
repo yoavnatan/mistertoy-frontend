@@ -10,10 +10,18 @@ export function DoughnutChart() {
     const [avarages, setAvarages] = useState()
 
     useEffect(() => {
-        toyService.getLabelsStats()
-            .then(res => setAvarages(res))
+        (async () => {
+            const res = await toyService.getLabelsStats()
+            setAvarages(res)
+        })()
+        // fetchData()
     }, [])
 
+
+    async function fetchData() {
+        const res = await toyService.getLabelsStats()
+        setAvarages(res)
+    }
     const options = {
         responsive: true,
         animation: {

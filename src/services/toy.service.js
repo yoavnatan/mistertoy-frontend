@@ -112,52 +112,51 @@ function getRandomLabels() {
 }
 
 function getToyLabels() {
-    return new Promise((resolve) =>
-        setTimeout(() => {
-            resolve(labels)
-        }, 100)
-    )
+
+    return [...labels]
 }
 
-function getLabelsStats() {
-    return query()
-        .then(toys => {
-            const result = {}
+async function getLabelsStats() {
 
-            labels.forEach(label => {
-                const filtered = toys.filter(toy => toy.labels.includes(label))
 
-                if (filtered.length === 0) {
-                    result[label] = null
-                } else {
-                    const avg = filtered.reduce((sum, toy) => sum + toy.price, 0) / filtered.length
-                    result[label] = avg
-                }
-            })
-            return result
-        })
+    const toys = await query()
+
+    const result = {}
+
+    labels.forEach(label => {
+        const filtered = toys.filter(toy => toy.labels.includes(label))
+
+        if (filtered.length === 0) {
+            result[label] = null
+        } else {
+            const avg = filtered.reduce((sum, toy) => sum + toy.price, 0) / filtered.length
+            result[label] = avg
+        }
+    })
+    return result
+
 }
 
-function getInventoryByLabel() {
-    return query()
-        .then(toys => {
-            const result = {}
+async function getInventoryByLabel() {
+    const toys = await query()
 
-            labels.forEach(label => {
-                result[label] = { inStock: 0, outOfStock: 0 }
-            })
+    const result = {}
 
-            toys.forEach(toy => {
-                toy.labels.forEach(label => {
-                    if (result[label]) {
-                        if (toy.inStock) result[label].inStock++
-                        else result[label].outOfStock++
-                    }
-                })
-            })
-            console.log(result)
-            return result
+    labels.forEach(label => {
+        result[label] = { inStock: 0, outOfStock: 0 }
+    })
 
+    toys.forEach(toy => {
+        toy.labels.forEach(label => {
+            if (result[label]) {
+                if (toy.inStock) result[label].inStock++
+                else result[label].outOfStock++
+            }
         })
+    })
+    console.log(result)
+    return result
+
+
 
 }
