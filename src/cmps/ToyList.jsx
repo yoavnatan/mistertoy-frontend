@@ -1,4 +1,5 @@
 import { ToyPreview } from "./ToyPreview.jsx"
+import { Link } from "react-router-dom";
 
 export function ToyList({ toys, onRemoveToy, onEditToy, addToCart }) {
     return (
@@ -9,7 +10,7 @@ export function ToyList({ toys, onRemoveToy, onEditToy, addToCart }) {
 
                     <div>
                         <button onClick={() => onRemoveToy(toy._id)}>x</button>
-                        <button onClick={() => onEditToy(toy)}>Edit</button>
+                        <button><Link to={`/toy/edit/${toy._id}`}>Edit</Link></button>
                     </div>
                     <button className="buy" onClick={() => addToCart(car)}>
                         Add to Cart

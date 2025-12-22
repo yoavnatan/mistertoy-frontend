@@ -68,9 +68,9 @@ function save(toy) {
 
 function getEmptyToy() {
     return {
-        vendor: '',
+        name: '',
         price: '',
-        speed: '',
+        inStock: false
     }
 }
 
@@ -83,7 +83,7 @@ function getRandomToy() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', maxPrice: '', inStock: '', labels: [] }
+    return { txt: '', maxPrice: '', inStock: '', labels: [], sort: '' }
 }
 
 

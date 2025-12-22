@@ -8,18 +8,20 @@ import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyIndex } from './pages/ToyIndex.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { loadToys } from './store/actions/toy.actions.js'
 import { AboutUs } from './cmps/AboutUs.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
+import { authService } from './services/auth.service.js'
+import { LoginSignup } from './pages/LoginSignup.jsx'
 
 export default function App() {
+
   useEffect(() => {
     loadToys()
   })
 
   return (
-
 
     <Provider store={store}>
       <Router>
@@ -34,6 +36,7 @@ export default function App() {
               <Route element={<ToyDetails />} path="/toy/:toyId" />
               <Route element={<Dashboard />} path="/dashboard" />
               <Route element={<AboutUs />} path="/about" />
+              <Route element={<LoginSignup />} path="/auth" />
             </Routes>
           </main>
         </section>

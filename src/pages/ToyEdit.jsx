@@ -38,7 +38,7 @@ export function ToyEdit() {
         price: Yup.number()
             .required("Price is required")
             .min(1, "Must be at least 1"),
-        inStock: Yup.boolean(),
+        // inStock: Yup.boolean(),
     })
 
     async function onSave(values) {
@@ -64,7 +64,7 @@ export function ToyEdit() {
                 validationSchema={validationSchema}
                 onSubmit={onSave}
             >
-                {({ errors, touched, dirty }) => (
+                {({ errors, touched, values, dirty }) => (
 
                     <Form>
                         <label>Name:</label>

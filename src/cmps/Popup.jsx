@@ -15,7 +15,7 @@ export function Popup({ header, footer, children, isOpen, close }) {
                 <main>
                     {children}
                 </main>
-                <footer>{footer}</footer>
+                {/* <footer>{footer}</footer> */}
             </section>
         </>
     )

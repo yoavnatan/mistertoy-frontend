@@ -1,5 +1,4 @@
-import { toyService } from "../../services/toy.service"
-
+import { toyService } from "../../services/toy.service.js"
 // * TOYS
 export const SET_TOYS = 'SET_TOYS'
 export const REMOVE_TOY = 'REMOVE_TOY'
@@ -80,7 +79,7 @@ export function toyReducer(state = initialState, cmd = {}) {
         case TOY_UNDO:
             return {
                 ...state,
-                cars: [...state.lastCars]
+                toys: [...state.lasttoys]
             }
 
         default:
