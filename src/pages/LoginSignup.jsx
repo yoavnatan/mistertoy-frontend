@@ -29,7 +29,11 @@ export function LoginSignup() {
 
     function _signup(credentials) {
         signup(credentials)
-            .then(() => { showSuccessMsg('Signed in successfully') })
+            .then(() => {
+                showSuccessMsg('Signed in successfully')
+                navigate('/toy')
+
+            })
             .catch((err) => {
                 console.log(err)
                 showErrorMsg('Oops try again')

@@ -28,7 +28,9 @@ export const toyService = {
     getRandomLabels,
     getToyLabels,
     getLabelsStats,
-    getInventoryByLabel
+    getInventoryByLabel,
+    saveMsg,
+    removeMsg
 
 }
 
@@ -159,4 +161,13 @@ async function getInventoryByLabel() {
 
 
 
+}
+
+function saveMsg(toyId, txt) {
+    const msg = { txt }
+    return httpService.post(BASE_URL + toyId + '/msg', msg)
+}
+
+function removeMsg(toyId, msgId) {
+    return httpService.delete(BASE_URL + toyId + '/msg/' + msgId)
 }

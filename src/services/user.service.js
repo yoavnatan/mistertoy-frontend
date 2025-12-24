@@ -23,6 +23,7 @@ export const userService = {
 
 async function login({ username, password }) {
     const user = await httpService.post(BASE_URL + 'login', { username, password })
+    console.log(user)
     if (user) return _setLoggedinUser(user)
     else throw new Error('Invalid login')
 
@@ -64,7 +65,7 @@ function getLoggedinUser() {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, fullname: user.fullname, score: user.score }
+    const userToSave = { _id: user._id, fullname: user.fullname, isAdmin: user.isAdmin }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }

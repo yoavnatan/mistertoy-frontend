@@ -17,9 +17,9 @@ export function ToyIndex() {
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
-
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const isFirstRender = useRef(true)
-
+    console.log(loggedinUser)
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false
@@ -93,7 +93,7 @@ export function ToyIndex() {
                     />
                     : <div>Loading...</div>
                 } */}
-                    <Link className="btn-add" to="/toy/edit">Add Toy</Link>
+                    {loggedinUser && loggedinUser.isAdmin && <Link className="btn-add" to="/toy/edit">Add Toy</Link>}
                 </div>
 
                 {/* {isLoading && <Loader />}
@@ -102,6 +102,7 @@ export function ToyIndex() {
                     <ToyList
                         toys={toys}
                         onRemoveToy={onRemoveToy}
+                        loggedinUser={loggedinUser}
                     />
                 </Loader>
                 <hr />

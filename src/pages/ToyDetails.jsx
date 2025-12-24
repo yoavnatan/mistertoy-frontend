@@ -4,9 +4,12 @@ import { Link, useParams } from "react-router-dom"
 import { Popup } from "../cmps/Popup.jsx";
 import { Chat } from "../cmps/Chat.jsx";
 import { useOnlineStatus } from "../cmps/hooks/useOnlineStatus.js"
+import { ToyMessages } from "../cmps/ToyMessages.jsx";
+import { useSelector } from "react-redux";
 
 
 export function ToyDetails() {
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const [toy, setToy] = useState(null)
     const [popupIsOpen, setPopupIsOpen] = useState(false)
     const isOnline = useOnlineStatus()
@@ -42,6 +45,12 @@ export function ToyDetails() {
         setPopupIsOpen(prevState => !prevState)
     }
 
+    function onSaveMsg(txt) {
+        toyService.saveMsg(txt)
+    }
+
+
+    console.log(toy)
 
     if (!toy) return <div>Loading...</div>
     return (
@@ -60,6 +69,8 @@ export function ToyDetails() {
             <Popup isOpen={popupIsOpen} header={'How can I help?'} footer={''} close={onTogglePopup}>
                 <Chat />
             </Popup>
+            <h2>Messages: </h2>
+            <ToyMessages toy={toy} setToy={setToy} loggedinUser={loggedinUser} />
         </>
 
     )
