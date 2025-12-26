@@ -10,7 +10,8 @@ const BASE_URL = 'review/'
 
 export const reviewService = {
     query,
-    saveReview
+    saveReview,
+    getDefaultFilter
 }
 
 function query(filterBy = {}) {
@@ -24,4 +25,10 @@ function saveReview(toyId, txt) {
         txt
     }
     return httpService.post(BASE_URL + toyId, review)
+}
+
+function getDefaultFilter() {
+
+    return { txt: '' }
+
 }
