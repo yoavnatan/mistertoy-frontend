@@ -30,7 +30,7 @@ export const toyService = {
     getLabelsStats,
     getInventoryByLabel,
     saveMsg,
-    removeMsg
+    removeMsg,
 
 }
 

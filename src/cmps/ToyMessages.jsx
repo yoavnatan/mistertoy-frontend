@@ -43,7 +43,6 @@ export function ToyMessages({ toy, setToy, loggedinUser }) {
         }
     }
 
-    console.log(toy.msgs)
     return (
         <>
             {loggedinUser && <button className="btn btn-add-msg" onClick={onAddMsg}>Add msg</button>}

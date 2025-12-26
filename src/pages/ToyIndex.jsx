@@ -19,7 +19,6 @@ export function ToyIndex() {
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const isFirstRender = useRef(true)
-    console.log(loggedinUser)
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false

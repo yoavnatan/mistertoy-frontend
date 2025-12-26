@@ -14,6 +14,7 @@ import { AboutUs } from './cmps/AboutUs.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { authService } from './services/auth.service.js'
 import { LoginSignup } from './pages/LoginSignup.jsx'
+import { UserDetails } from './pages/UserDetails.jsx'
 
 export default function App() {
 
@@ -37,6 +38,7 @@ export default function App() {
               <Route element={<Dashboard />} path="/dashboard" />
               <Route element={<AboutUs />} path="/about" />
               <Route element={<LoginSignup />} path="/auth" />
+              <Route element={<UserDetails />} path="/user/:userId" />
             </Routes>
           </main>
         </section>
