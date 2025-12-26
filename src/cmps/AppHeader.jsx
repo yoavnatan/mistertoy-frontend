@@ -35,6 +35,7 @@ export function AppHeader() {
             <ul className="main-nav flex clean-list">
                 <NavLink to="/about" className="link flex align-center"> <i className="fa-solid fa-circle-info"></i>About</NavLink>
                 <NavLink to="/" className="link flex align-center"><i className="fa-solid fa-gamepad"></i>Toys</NavLink>
+                <NavLink to="/review" className="link flex align-center"><i className="fa-solid fa-book"></i>Reviews</NavLink>
                 <NavLink to="/dashboard" className="link flex align-center"><i className="fa-solid fa-chart-line"></i> Dashboard</NavLink>
             </ul>
         </header>
