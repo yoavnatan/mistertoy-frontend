@@ -76,6 +76,17 @@ export function ToyIndex() {
         showSuccessMsg('Added to Cart')
     }
 
+    function onGetPage(dir) {
+        console.log(Math.ceil(toys.length / filterBy.pageSize))
+        if (filterBy.pageIdx + dir < 0 || filterBy.pageIdx + dir > Math.ceil(toys.length / filterBy.pageSize)) return
+        setFilterBy({ ...filterBy, pageIdx: filterBy.pageIdx += dir })
+
+        //     prev => {
+        //     if (prev.pageIdx + dir < 0 || prev.pageIdx + dir > Math.ceil(toys.length / filterBy.pageSize)) return prev
+        //     return { ...prev, pageIdx: prev.pageIdx += dir }
+        // }
+
+    }
     return (
         <section className="toy-index">
             <main>
@@ -105,6 +116,10 @@ export function ToyIndex() {
                     />
                 </Loader>
                 <hr />
+
+                <button onClick={() => onGetPage(-1)}>-</button>
+                <span>{filterBy.pageIdx + 1}</span>
+                <button onClick={() => onGetPage(1)}>+</button>
             </main>
         </section>
     )
