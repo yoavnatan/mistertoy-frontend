@@ -77,6 +77,7 @@ export function ToyIndex() {
     }
 
     function onGetPage(dir) {
+        console.log(toys)
         console.log(Math.ceil(toys.length / filterBy.pageSize))
         if (filterBy.pageIdx + dir < 0 || filterBy.pageIdx + dir > Math.ceil(toys.length / filterBy.pageSize)) return
         setFilterBy({ ...filterBy, pageIdx: filterBy.pageIdx += dir })

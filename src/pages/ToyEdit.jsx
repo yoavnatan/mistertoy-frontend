@@ -6,6 +6,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
+import { ImgUploader } from "../cmps/ImgUploader.jsx"
 
 export function ToyEdit() {
     const navigate = useNavigate()
@@ -42,7 +43,7 @@ export function ToyEdit() {
     })
 
     async function onSave(values) {
-
+        console.log(values)
         try {
             await saveToy(values)
             showSuccessMsg("Toy saved!")
@@ -51,6 +52,11 @@ export function ToyEdit() {
             console.log(err)
             showErrorMsg("Problem saving toy")
         }
+
+    }
+
+    function onUploaded(imgUrl) {
+        setToyToEdit({ ...toyToEdit, imgUrl })
 
     }
 
@@ -80,6 +86,7 @@ export function ToyEdit() {
                         <label>In Stock:</label>
                         <Field name="inStock" type="checkbox" />
 
+                        <ImgUploader onUploaded={onUploaded} />
                         <button type="submit">
                             {toyId ? "Save" : "Add"}
                         </button>
