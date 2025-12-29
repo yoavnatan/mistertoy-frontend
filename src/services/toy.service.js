@@ -85,7 +85,7 @@ function getRandomToy() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', maxPrice: '', inStock: '', labels: [], sort: '', pageIdx: 0, pageSize: 5 }
+    return { txt: '', maxPrice: '', inStock: '', labels: [], sort: '', pageIdx: 0, pageSize: 4 }
 }
 
 

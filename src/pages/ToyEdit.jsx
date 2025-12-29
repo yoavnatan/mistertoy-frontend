@@ -7,6 +7,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import { ImgUploader } from "../cmps/ImgUploader.jsx"
+import TextField from '@mui/material/TextField';
 
 export function ToyEdit() {
     const navigate = useNavigate()
@@ -60,6 +61,17 @@ export function ToyEdit() {
 
     }
 
+    function CustomInput(props) {
+        // console.log('props:', props)
+        return (
+            <TextField
+                label={props.label}
+                variant="outlined"
+                {...props}
+            />
+        )
+    }
+
     return (
         <section className="toy-edit">
             <h2>{toyId ? "Edit Toy" : "Add Toy"}</h2>
@@ -73,7 +85,8 @@ export function ToyEdit() {
                 {({ errors, touched, values, dirty }) => (
 
                     <Form>
-                        <label>Name:</label>
+                        {/* <Field as={CustomInput} label="Name" name="name" type="text" /> */}
+                        {/* <label>Name:</label> */}
                         <Field name="name" type="text" />
                         {errors.name && touched.name && (
                             <div className='errors'>{errors.name}</div>

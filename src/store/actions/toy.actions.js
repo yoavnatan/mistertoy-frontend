@@ -1,6 +1,6 @@
 import { toyService } from "../../services/toy.service.js";
 import { showSuccessMsg } from "../../services/event-bus.service.js";
-import { ADD_TOY, TOY_UNDO, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, TOY_UNDO, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY, SET_TOY_LENGTH } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export async function loadToys() {
@@ -8,7 +8,12 @@ export async function loadToys() {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
 
     try {
-        const toys = await toyService.query(filterBy)
+        let toys = await toyService.query(filterBy)
+        const maxPage = toys.length
+        console.log(maxPage)
+        store.dispatch({ type: SET_TOY_LENGTH, maxPage })
+        const startIdx = filterBy.pageIdx * filterBy.pageSize;
+        toys = toys.slice(startIdx, startIdx + filterBy.pageSize)
         store.dispatch({ type: SET_TOYS, toys })
         const labels = await toyService.getToyLabels()
         // setToyLabels(labels)

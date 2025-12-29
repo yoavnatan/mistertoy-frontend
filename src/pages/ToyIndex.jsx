@@ -14,6 +14,7 @@ export function ToyIndex() {
 
     const dispatch = useDispatch()
     const toys = useSelector(storeState => storeState.toyModule.toys || [])
+    const toysLength = useSelector(storeState => storeState.toyModule.toysLength || null)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
@@ -77,9 +78,9 @@ export function ToyIndex() {
     }
 
     function onGetPage(dir) {
-        console.log(toys)
-        console.log(Math.ceil(toys.length / filterBy.pageSize))
-        if (filterBy.pageIdx + dir < 0 || filterBy.pageIdx + dir > Math.ceil(toys.length / filterBy.pageSize)) return
+        console.log(toysLength)
+        console.log(Math.ceil(toysLength / filterBy.pageSize))
+        if (filterBy.pageIdx + dir < 0 || filterBy.pageIdx + dir > Math.ceil(toysLength / filterBy.pageSize) - 1) return
         setFilterBy({ ...filterBy, pageIdx: filterBy.pageIdx += dir })
 
         //     prev => {
@@ -88,6 +89,7 @@ export function ToyIndex() {
         // }
 
     }
+    console.log(toys)
     return (
         <section className="toy-index">
             <main>
