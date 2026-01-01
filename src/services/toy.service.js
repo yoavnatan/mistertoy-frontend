@@ -31,6 +31,7 @@ export const toyService = {
     getInventoryByLabel,
     saveMsg,
     removeMsg,
+    saveChatMsg,
 
 }
 
@@ -170,4 +171,9 @@ function saveMsg(toyId, txt) {
 
 function removeMsg(toyId, msgId) {
     return httpService.delete(BASE_URL + toyId + '/msg/' + msgId)
+}
+
+function saveChatMsg(toyId, msg) {
+
+    return httpService.post(BASE_URL + toyId + '/chatMsg', msg)
 }
