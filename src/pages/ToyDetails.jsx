@@ -8,6 +8,7 @@ import { ToyMessages } from "../cmps/ToyMessages.jsx";
 import { useSelector } from "react-redux";
 import { reviewService } from "../services/review.service.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
+import { ChatRoom } from "../cmps/ChatRoom.jsx";
 
 
 export function ToyDetails() {
@@ -106,6 +107,7 @@ export function ToyDetails() {
             </ul>
             <h3>Messages: </h3>
             <ToyMessages toy={toy} setToy={setToy} loggedinUser={loggedinUser} />
+            <ChatRoom toy={toy} />
         </>
 
     )

@@ -1,4 +1,6 @@
 .main-header {
+    position: sticky;
+    top: 0;
     background-color: var(--clr2bg-light);
     /* height: min-content; */
     justify-content: space-between;
