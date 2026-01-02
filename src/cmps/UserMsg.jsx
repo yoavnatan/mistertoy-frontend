@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { eventBusService } from '../services/event-bus.service'
+import { eventBusService, showSuccessMsg } from '../services/event-bus.service.js'
+import { SOCKET_EVENT_TOYS_UPDATE, socketService } from '../services/socket.service.js'
 
 export function UserMsg() {
     const [msg, setMsg] = useState(null)
@@ -14,8 +15,16 @@ export function UserMsg() {
                 timeoutIdRef.current = null
             }
             timeoutIdRef.current = setTimeout(closeMsg, 3000)
+
+
         })
-        return unsubscribe
+        socketService.on(SOCKET_EVENT_TOYS_UPDATE, update => {
+            showSuccessMsg(`Admin has ${update.txt}`)
+        })
+        return () => {
+            unsubscribe()
+            socketService.off(SOCKET_EVENT_TOYS_UPDATE)
+        }
     }, [])
 
     function closeMsg() {

@@ -9,6 +9,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ToySort } from '../cmps/ToySort.jsx'
 import { Loader } from '../cmps/Loader.jsx'
+import { SOCKET_EVENT_TOYS_UPDATE, socketService } from '../services/socket.service.js'
+import { REMOVE_TOY } from '../store/reducers/toy.reducer.js'
 
 export function ToyIndex() {
 
@@ -20,6 +22,15 @@ export function ToyIndex() {
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const isFirstRender = useRef(true)
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_TOYS_UPDATE, update => {
+            dispatch({ type: REMOVE_TOY, toyId: update.toyId })
+        })
+        return () => {
+            socketService.off(SOCKET_EVENT_TOYS_UPDATE)
+        }
+    }, [])
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false
