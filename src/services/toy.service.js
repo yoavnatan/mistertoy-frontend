@@ -32,7 +32,7 @@ export const toyService = {
     saveMsg,
     removeMsg,
     saveChatMsg,
-
+    updateTypingMode,
 }
 
 const labels = [
@@ -176,4 +176,8 @@ function removeMsg(toyId, msgId) {
 function saveChatMsg(toyId, msg) {
 
     return httpService.post(BASE_URL + toyId + '/chatMsg', msg)
+}
+
+function updateTypingMode(toyId) {
+    return httpService.post(BASE_URL + toyId + '/chatTyping')
 }
